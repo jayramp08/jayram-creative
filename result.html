@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<body style="background:black;color:white;text-align:center">
+
+<h1>Your Score</h1>
+<h2 id="score"></h2>
+
+<script>
+let score=localStorage.getItem("score")||0;
+
+let best=localStorage.getItem("best")||0;
+
+if(score>best){
+ localStorage.setItem("best",score);
+ best=score;
+}
+
+document.getElementById("score").innerHTML=
+"Current: "+score+"<br>Best: "+best;
+</script>
+
+</body>
+</html>
