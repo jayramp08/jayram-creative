@@ -173,19 +173,32 @@ function submit(){
 
 // RESULT
 function result(){
+
  let phy=0, chem=0, mathScore=0;
 
  for(let i=0;i<10;i++){
- if(ans["pc"+i]===pc[i].ans){
- if(pc[i].sub==="phy") phy++;
- else chem++;
- }
+  if(ans["pc"+i]===pc[i].ans){
+    if(pc[i].sub==="phy") phy++;
+    else chem++;
+  }
  }
 
  for(let i=0;i<10;i++){
- if(ans["math"+i]===math[i].ans){
- mathScore+=2;
+  if(ans["math"+i]===math[i].ans){
+    mathScore+=2;
+  }
  }
+
+ let total = phy + chem + mathScore;
+
+ // Save to localStorage
+ localStorage.setItem("phy", phy);
+ localStorage.setItem("chem", chem);
+ localStorage.setItem("math", mathScore);
+ localStorage.setItem("total", total);
+
+ // Redirect
+ window.location.href = "result.html";
  }
 
  document.body.innerHTML=`
