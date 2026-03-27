@@ -1,97 +1,208 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>MHT-CET Test</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mini CET Mock</title>
+
 <style>
-body { font-family:Arial; text-align:center; }
-button { margin:5px; padding:10px; }
+body { margin:0; font-family:Arial; background:#111; color:white; }
+.top { background:red; padding:10px; }
+.container { display:flex; }
+
+.left { width:70%; padding:15px; }
+.right { width:30%; background:#222; padding:10px; display:grid; grid-template-columns:repeat(5,1fr); gap:5px; }
+
+.box { padding:8px; text-align:center; cursor:pointer; background:red; }
+.answered { background:green; }
+.review { background:orange; }
+
+button { margin:5px; padding:8px; }
+
 </style>
 </head>
 
 <body>
 
-<h1>MHT-CET Mock Test</h1>
-<h2 id="section">Physics + Chemistry</h2>
-<h3 id="timer">Time: 90:00</h3>
+<div class="top">
+Section: <span id="section">Physics + Chemistry</span> |
+Time: <span id="timer">15:00</span>
+</div>
 
-<div id="questionBox"></div>
+<div class="container">
+
+<div class="left">
+<h3 id="q"></h3>
+<div id="opt"></div>
+
+<button onclick="save()">Save</button>
+<button onclick="saveNext()">Save & Next</button>
+<button onclick="mark()">Mark</button>
+<button onclick="clearAns()">Clear</button>
+
+<br><br>
+<button id="submitBtn" onclick="submit()">Submit</button>
+</div>
+
+<div class="right" id="palette"></div>
+
+</div>
 
 <script>
 
-let pcQuestions = [
-{ q:"Sample PC Question", options:["A","B","C","D"], answer:"A" }
+// QUESTIONS (REAL TYPE)
+let pc = [
+{q:"Unit of force?", options:["Newton","Joule","Watt","Pascal"], ans:"Newton", sub:"phy"},
+{q:"Acceleration due to gravity?", options:["9.8","10","8","12"], ans:"9.8", sub:"phy"},
+{q:"Ohm's law?", options:["V=IR","P=VI","F=ma","E=mc2"], ans:"V=IR", sub:"phy"},
+{q:"Unit of power?", options:["Watt","Joule","Newton","Volt"], ans:"Watt", sub:"phy"},
+{q:"Speed of light?", options:["3x10^8","3x10^6","3x10^5","3x10^7"], ans:"3x10^8", sub:"phy"},
+
+{q:"pH neutral?", options:["7","1","14","0"], ans:"7", sub:"chem"},
+{q:"Atomic no of Na?", options:["11","12","10","9"], ans:"11", sub:"chem"},
+{q:"H2O is?", options:["Compound","Element","Mixture","Gas"], ans:"Compound", sub:"chem"},
+{q:"Gas law?", options:["PV=nRT","F=ma","V=IR","E=mc2"], ans:"PV=nRT", sub:"chem"},
+{q:"Acid example?", options:["HCl","NaCl","NaOH","H2O"], ans:"HCl", sub:"chem"}
 ];
 
-let mathsQuestions = [
-{ q:"Sample Maths Question", options:["A","B","C","D"], answer:"B" }
+let math = [
+{q:"sin²x+cos²x=?", options:["1","0","2","x"], ans:"1"},
+{q:"d/dx x²=?", options:["2x","x","x²","1"], ans:"2x"},
+{q:"∫dx=?", options:["x","1","0","x²"], ans:"x"},
+{q:"2+2=?", options:["4","3","2","5"], ans:"4"},
+{q:"log10 100=?", options:["2","1","10","0"], ans:"2"},
+{q:"tan45?", options:["1","0","-1","2"], ans:"1"},
+{q:"√16=?", options:["4","2","8","6"], ans:"4"},
+{q:"x²=9?", options:["±3","3","-3","9"], ans:"±3"},
+{q:"5×6=?", options:["30","20","25","35"], ans:"30"},
+{q:"π value?", options:["3.14","2.14","1.14","4.14"], ans:"3.14"}
 ];
 
-let section="PC";
-let current=0;
-let score=0;
-let time=5400;
+let section="pc";
+let index=0;
+let ans={}, status={};
+let time=900;
 
-function showQuestion(){
-let q=(section==="PC")?pcQuestions[current]:mathsQuestions[current];
-let html="<h3>"+q.q+"</h3>";
-q.options.forEach(opt=>{
-html+=`<button onclick="checkAnswer('${opt}')">${opt}</button><br>`;
-});
-document.getElementById("questionBox").innerHTML=html;
+// SHOW
+function show(){
+ let data = section==="pc"?pc:math;
+ let q=data[index];
+
+ document.getElementById("q").innerText=q.q;
+
+ let html="";
+ q.options.forEach(o=>{
+ html+=`<input type="radio" name="opt" onclick="select('${o}')"> ${o}<br>`;
+ });
+
+ document.getElementById("opt").innerHTML=html;
+ updatePalette();
+ checkSubmit();
 }
 
-function checkAnswer(ans){
-let q=(section==="PC")?pcQuestions[current]:mathsQuestions[current];
-if(ans===q.answer) score++;
-current++;
+// SELECT
+function select(v){ ans[section+index]=v; }
 
-let total=(section==="PC")?pcQuestions.length:mathsQuestions.length;
+// BUTTONS
+function save(){ status[section+index]="answered"; }
+function saveNext(){ save(); next(); }
+function mark(){ status[section+index]="review"; }
+function clearAns(){ delete ans[section+index]; }
 
-if(current<total) showQuestion();
-else{
-if(section==="PC"){
-section="Maths";
-current=0;
-time=5400;
-document.getElementById("section").innerText="Mathematics";
-showQuestion();
-}else{
-endTest();
-}
-}
-}
+// NEXT
+function next(){ index++; show(); }
 
-function startTimer(){
-let interval=setInterval(()=>{
-time--;
-let min=Math.floor(time/60);
-let sec=time%60;
-document.getElementById("timer").innerText=`Time: ${min}:${sec}`;
-
-if(time<=0){
-clearInterval(interval);
-if(section==="PC"){
-section="Maths";
-current=0;
-time=5400;
-document.getElementById("section").innerText="Mathematics";
-showQuestion();
-startTimer();
-}else{
-endTest();
-}
-}
-},1000);
+// PALETTE
+function loadPalette(){
+ let total=section==="pc"?10:10;
+ let html="";
+ for(let i=0;i<total;i++){
+ html+=`<div id="p${i}" class="box" onclick="jump(${i})">${i+1}</div>`;
+ }
+ document.getElementById("palette").innerHTML=html;
 }
 
-function endTest(){
-document.body.innerHTML=`<h1>Test Completed</h1><h2>Score: ${score}</h2>`;
+function updatePalette(){
+ let total=10;
+ for(let i=0;i<total;i++){
+ let box=document.getElementById("p"+i);
+ let st=status[section+i];
+ if(st==="answered") box.className="box answered";
+ else if(st==="review") box.className="box review";
+ else box.className="box";
+ }
 }
 
-showQuestion();
-startTimer();
+function jump(i){ index=i; show(); }
+
+// TIMER
+function timer(){
+ setInterval(()=>{
+ time--;
+ let m=Math.floor(time/60);
+ let s=time%60;
+ document.getElementById("timer").innerText=m+":"+s;
+
+ if(time<=0) nextSection();
+ },1000);
+}
+
+// SWITCH
+function nextSection(){
+ if(section==="pc"){
+ section="math";
+ index=0;
+ time=900;
+ document.getElementById("section").innerText="Mathematics";
+ loadPalette();
+ show();
+ } else {
+ result();
+ }
+}
+
+// SUBMIT
+function checkSubmit(){
+ let btn=document.getElementById("submitBtn");
+ if(index!==9) btn.style.display="none";
+ else btn.style.display="block";
+}
+
+function submit(){
+ nextSection();
+}
+
+// RESULT
+function result(){
+ let phy=0, chem=0, mathScore=0;
+
+ for(let i=0;i<10;i++){
+ if(ans["pc"+i]===pc[i].ans){
+ if(pc[i].sub==="phy") phy++;
+ else chem++;
+ }
+ }
+
+ for(let i=0;i<10;i++){
+ if(ans["math"+i]===math[i].ans){
+ mathScore+=2;
+ }
+ }
+
+ document.body.innerHTML=`
+ <h1>Result</h1>
+ <h2>Physics: ${phy}</h2>
+ <h2>Chemistry: ${chem}</h2>
+ <h2>Maths: ${mathScore}</h2>
+ <h2>Total: ${phy+chem+mathScore}</h2>
+ `;
+}
+
+// START
+loadPalette();
+show();
+timer();
 
 </script>
 
 </body>
-</html>
+  </html>
