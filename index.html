@@ -13,76 +13,42 @@
 }
 
 body {
-  height: 100vh;
   background: black;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: start;
   color: white;
+  text-align: center;
 }
 
-/* Big Square */
-.big-box {
-  margin-top: 30px;
-  width: 85%;
-  height: 200px;
-  border-radius: 20px;
-  position: relative;
+/* HEADER */
+.header {
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 40px;
+  gap: 10px;
 }
 
-/* Rainbow border */
-.big-box::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  padding: 3px;
-  border-radius: 20px;
-  background: linear-gradient(45deg, red, orange, yellow, green, cyan, blue, violet);
-  background-size: 300%;
-  animation: rotate 5s linear infinite;
-  -webkit-mask: 
-    linear-gradient(#000 0 0) content-box, 
-    linear-gradient(#000 0 0);
-  -webkit-mask-composite: xor;
-}
-
-/* Animation */
-@keyframes rotate {
-  0% { background-position: 0% }
-  100% { background-position: 300% }
-}
-
-/* Inner box */
-.inner {
-  width: 100%;
-  height: 100%;
-  background: #111;
-  border-radius: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+/* Logo */
+.logo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
 }
 
 /* Title */
 .title {
-  font-size: 28px;
+  font-size: 26px;
   font-weight: bold;
   letter-spacing: 2px;
 }
 
 /* Buttons */
 .btns {
-  margin-top: 25px;
-  display: flex;
-  gap: 15px;
+  margin-top: 20px;
 }
 
 .btn {
   padding: 10px 20px;
+  margin: 5px;
   border-radius: 8px;
   border: none;
   background: #ff3b3b;
@@ -91,32 +57,33 @@ body {
   cursor: pointer;
 }
 
-/* Small Cards */
-.small-box {
-  margin-top: 30px;
+/* Card */
+.box {
+  margin: 25px auto;
   width: 85%;
   height: 120px;
   border-radius: 15px;
   position: relative;
 }
 
-/* Rainbow border for small */
-.small-box::before {
+/* Rainbow border */
+.box::before {
   content: "";
   position: absolute;
   inset: 0;
   padding: 3px;
   border-radius: 15px;
-  background: linear-gradient(45deg, red, yellow, cyan, blue);
+  background: linear-gradient(45deg, red, orange, yellow, green, cyan, blue, violet);
   background-size: 300%;
   animation: rotate 5s linear infinite;
-  -webkit-mask: 
-    linear-gradient(#000 0 0) content-box, 
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
     linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
 }
 
-.small-inner {
+/* Inner */
+.inner {
   width: 100%;
   height: 100%;
   background: #111;
@@ -128,16 +95,21 @@ body {
   cursor: pointer;
 }
 
+/* Animation */
+@keyframes rotate {
+  0% { background-position: 0% }
+  100% { background-position: 300% }
+}
+
 </style>
 </head>
 
 <body>
 
-<!-- BIG BOX -->
-<div class="big-box">
-  <div class="inner">
-    <div class="title">JAYRAM CREATIVE</div>
-  </div>
+<!-- HEADER -->
+<div class="header">
+  <img src="logo.png" class="logo">
+  <div class="title">JAYRAM CREATIVE</div>
 </div>
 
 <!-- LOGIN SIGNUP -->
@@ -147,13 +119,13 @@ body {
 </div>
 
 <!-- MOCK TEST -->
-<div class="small-box" onclick="mock()">
-  <div class="small-inner">Mock Test</div>
+<div class="box" onclick="mock()">
+  <div class="inner">Mock Test</div>
 </div>
 
 <!-- SUBSCRIBE -->
-<div class="small-box" onclick="youtube()">
-  <div class="small-inner">Subscribe Channel</div>
+<div class="box" onclick="youtube()">
+  <div class="inner">Subscribe Channel</div>
 </div>
 
 <script>
