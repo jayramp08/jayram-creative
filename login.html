@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Login</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  background: black;
+  color: white;
+  text-align: center;
+  font-family: Arial;
+}
+
+.box {
+  margin-top: 100px;
+}
+
+input {
+  display: block;
+  margin: 15px auto;
+  padding: 10px;
+  width: 70%;
+  border-radius: 8px;
+  border: none;
+}
+
+button {
+  padding: 10px 20px;
+  background: green;
+  border: none;
+  color: white;
+  border-radius: 8px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+  <h2>Login</h2>
+
+  <input type="text" id="user" placeholder="Username">
+  <input type="password" id="pass" placeholder="Password">
+
+  <button onclick="login()">Login</button>
+</div>
+
+<script>
+function login(){
+  let u = document.getElementById("user").value;
+  let p = document.getElementById("pass").value;
+
+  let storedUser = localStorage.getItem("username");
+  let storedPass = localStorage.getItem("password");
+
+  if(u === storedUser && p === storedPass){
+    alert("Login Successful ✅");
+    window.location.href = "index.html";
+  } else {
+    alert("Wrong Username or Password ❌");
+  }
+}
+</script>
+
+</body>
+</html>
