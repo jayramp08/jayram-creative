@@ -2,13 +2,59 @@
 <html>
 <head>
 <title>Jayram Creative</title>
+
 <style>
-body { margin:0; font-family:Arial; background:linear-gradient(135deg,#1e3c72,#2a5298); color:white; text-align:center; }
-header { padding:20px; font-size:28px; font-weight:bold; }
-.container { margin-top:80px; }
-h1 { font-size:40px; }
-.btn { margin-top:30px; padding:12px 25px; font-size:18px; border:none; border-radius:25px; background:#ff9800; color:white; cursor:pointer; }
-.btn:hover { background:#e68900; }
+body {
+  margin: 0;
+  font-family: Arial;
+  color: white;
+  text-align: center;
+  animation: bgChange 10s infinite alternate;
+}
+
+/* Background animation */
+@keyframes bgChange {
+  0% { background: #1e3c72; }
+  50% { background: #2a5298; }
+  100% { background: #ff512f; }
+}
+
+header {
+  padding: 20px;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.container {
+  margin-top: 50px;
+}
+
+/* Grid layout */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+/* Cards */
+.card {
+  background: rgba(255,255,255,0.15);
+  padding: 30px;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.card:hover {
+  transform: scale(1.05);
+  background: rgba(255,255,255,0.3);
+}
+
+h2 {
+  margin-bottom: 20px;
+}
+
 </style>
 </head>
 
@@ -17,14 +63,47 @@ h1 { font-size:40px; }
 <header>Jayram Creative 🚀</header>
 
 <div class="container">
-<h1>Welcome to My MHT-CET Platform</h1>
-<button class="btn" onclick="startTest()">Start Mock Test</button>
+  <h2>Welcome! Choose an Option</h2>
+
+  <div class="grid">
+
+    <div class="card" onclick="login()">
+      🔐<br><br>Login
+    </div>
+
+    <div class="card" onclick="signup()">
+      📝<br><br>Sign Up
+    </div>
+
+    <div class="card" onclick="startTest()">
+      📘<br><br>Mock Test
+    </div>
+
+    <div class="card" onclick="timetable()">
+      ⏰<br><br>Time Table
+    </div>
+
+  </div>
 </div>
 
 <script>
-function startTest() {
-window.location.href = "test.html";
+
+function login(){
+  alert("Login page coming soon 😎");
 }
+
+function signup(){
+  alert("Signup page coming soon 😎");
+}
+
+function startTest(){
+  window.location.href = "test.html";
+}
+
+function timetable(){
+  alert("Timetable feature coming soon 😎");
+}
+
 </script>
 
 </body>
