@@ -2,21 +2,34 @@
 <html>
 <body style="background:black;color:white;text-align:center">
 
-<h1>Your Score</h1>
-<h2 id="score"></h2>
+<h1>Result</h1>
+
+<h2 id="phy"></h2>
+<h2 id="chem"></h2>
+<h2 id="math"></h2>
+<h2 id="total"></h2>
+<h2 id="best"></h2>
 
 <script>
-let score=localStorage.getItem("score")||0;
 
-let best=localStorage.getItem("best")||0;
+let phy = localStorage.getItem("phy") || 0;
+let chem = localStorage.getItem("chem") || 0;
+let math = localStorage.getItem("math") || 0;
+let total = localStorage.getItem("total") || 0;
 
-if(score>best){
- localStorage.setItem("best",score);
- best=score;
+let best = localStorage.getItem("best") || 0;
+
+if(total > best){
+  localStorage.setItem("best", total);
+  best = total;
 }
 
-document.getElementById("score").innerHTML=
-"Current: "+score+"<br>Best: "+best;
+document.getElementById("phy").innerText = "Physics: " + phy;
+document.getElementById("chem").innerText = "Chemistry: " + chem;
+document.getElementById("math").innerText = "Maths: " + math;
+document.getElementById("total").innerText = "Total: " + total;
+document.getElementById("best").innerText = "Best Score: " + best;
+
 </script>
 
 </body>
