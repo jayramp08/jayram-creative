@@ -6,7 +6,7 @@
 
 <style>
 body { margin:0; font-family:Arial; background:#111; color:white; }
-.top { background:red; padding:10px; }
+.top { background:red; padding:10px; text-align:center; }
 .container { display:flex; }
 
 .left { width:70%; padding:15px; }
@@ -17,8 +17,8 @@ body { margin:0; font-family:Arial; background:#111; color:white; }
 .review { background:orange; }
 
 button { margin:5px; padding:8px; }
-
 </style>
+
 </head>
 
 <body>
@@ -49,7 +49,7 @@ Time: <span id="timer">15:00</span>
 
 <script>
 
-// QUESTIONS (REAL TYPE)
+// QUESTIONS
 let pc = [
 {q:"Unit of force?", options:["Newton","Joule","Watt","Pascal"], ans:"Newton", sub:"phy"},
 {q:"Acceleration due to gravity?", options:["9.8","10","8","12"], ans:"9.8", sub:"phy"},
@@ -82,7 +82,7 @@ let index=0;
 let ans={}, status={};
 let time=900;
 
-// SHOW
+// SHOW QUESTION
 function show(){
  let data = section==="pc"?pc:math;
  let q=data[index];
@@ -106,14 +106,20 @@ function select(v){ ans[section+index]=v; }
 function save(){ status[section+index]="answered"; }
 function saveNext(){ save(); next(); }
 function mark(){ status[section+index]="review"; }
-function clearAns(){ delete ans[section+index]; }
+function clearAns(){ delete ans[section+index]; show(); }
 
 // NEXT
-function next(){ index++; show(); }
+function next(){
+ let data = section==="pc"?pc:math;
+ if(index < data.length-1){
+   index++;
+   show();
+ }
+}
 
 // PALETTE
 function loadPalette(){
- let total=section==="pc"?10:10;
+ let total=10;
  let html="";
  for(let i=0;i<total;i++){
  html+=`<div id="p${i}" class="box" onclick="jump(${i})">${i+1}</div>`;
@@ -122,8 +128,7 @@ function loadPalette(){
 }
 
 function updatePalette(){
- let total=10;
- for(let i=0;i<total;i++){
+ for(let i=0;i<10;i++){
  let box=document.getElementById("p"+i);
  let st=status[section+i];
  if(st==="answered") box.className="box answered";
@@ -132,7 +137,10 @@ function updatePalette(){
  }
 }
 
-function jump(i){ index=i; show(); }
+function jump(i){
+ index=i;
+ show();
+}
 
 // TIMER
 function timer(){
@@ -146,27 +154,28 @@ function timer(){
  },1000);
 }
 
-// SWITCH
+// SWITCH SECTION
 function nextSection(){
  if(section==="pc"){
- section="math";
- index=0;
- time=900;
- document.getElementById("section").innerText="Mathematics";
- loadPalette();
- show();
+   section="math";
+   index=0;
+   time=900;
+   document.getElementById("section").innerText="Mathematics";
+   loadPalette();
+   show();
  } else {
- result();
+   result();
  }
 }
 
-// SUBMIT
+// SUBMIT BUTTON CONTROL
 function checkSubmit(){
  let btn=document.getElementById("submitBtn");
  if(index!==9) btn.style.display="none";
  else btn.style.display="block";
 }
 
+// SUBMIT
 function submit(){
  nextSection();
 }
@@ -191,23 +200,12 @@ function result(){
 
  let total = phy + chem + mathScore;
 
- // Save to localStorage
  localStorage.setItem("phy", phy);
  localStorage.setItem("chem", chem);
  localStorage.setItem("math", mathScore);
  localStorage.setItem("total", total);
 
- // Redirect
  window.location.href = "result.html";
- }
-
- document.body.innerHTML=`
- <h1>Result</h1>
- <h2>Physics: ${phy}</h2>
- <h2>Chemistry: ${chem}</h2>
- <h2>Maths: ${mathScore}</h2>
- <h2>Total: ${phy+chem+mathScore}</h2>
- `;
 }
 
 // START
@@ -218,4 +216,4 @@ timer();
 </script>
 
 </body>
-  </html>
+</html>
