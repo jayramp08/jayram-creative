@@ -7,52 +7,68 @@
 body {
   margin: 0;
   font-family: Arial;
-  color: white;
   text-align: center;
-  animation: bgChange 10s infinite alternate;
+  color: white;
+  animation: bg 10s infinite alternate;
 }
 
 /* Background animation */
-@keyframes bgChange {
+@keyframes bg {
   0% { background: #1e3c72; }
-  50% { background: #2a5298; }
-  100% { background: #ff512f; }
+  50% { background: #ff512f; }
+  100% { background: #2a5298; }
 }
 
-header {
-  padding: 20px;
-  font-size: 28px;
+/* Title */
+.title {
+  font-size: 40px;
   font-weight: bold;
+  margin-top: 20px;
+  background: linear-gradient(90deg, #ffcc00, #ff5733, #33ccff);
+  -webkit-background-clip: text;
+  color: transparent;
+  -webkit-text-stroke: 1px white;
 }
 
-.container {
-  margin-top: 50px;
+/* Line */
+.line {
+  width: 200px;
+  height: 4px;
+  margin: 10px auto 20px;
+  background: linear-gradient(90deg, red, yellow, cyan);
+  border-radius: 5px;
 }
 
-/* Grid layout */
+/* Grid */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 15px;
   padding: 20px;
 }
 
 /* Cards */
 .card {
-  background: rgba(255,255,255,0.15);
-  padding: 30px;
+  background: rgba(255,255,255,0.2);
+  padding: 25px;
   border-radius: 15px;
   cursor: pointer;
   transition: 0.3s;
+  animation: cardColor 6s infinite alternate;
+}
+
+@keyframes cardColor {
+  0% { background: rgba(255,0,0,0.3); }
+  50% { background: rgba(0,255,255,0.3); }
+  100% { background: rgba(255,255,0,0.3); }
 }
 
 .card:hover {
-  transform: scale(1.05);
-  background: rgba(255,255,255,0.3);
+  transform: scale(1.08);
 }
 
-h2 {
-  margin-bottom: 20px;
+.section {
+  margin-top: 20px;
 }
 
 </style>
@@ -60,30 +76,26 @@ h2 {
 
 <body>
 
-<header>Jayram Creative 🚀</header>
+<div class="title">Jayram Creative 🚀</div>
+<div class="line"></div>
 
-<div class="container">
-  <h2>Welcome! Choose an Option</h2>
+<!-- LOGIN SIGNUP -->
+<div class="grid">
+  <div class="card" onclick="login()">🔐<br><br>Login</div>
+  <div class="card" onclick="signup()">📝<br><br>Sign Up</div>
+</div>
 
-  <div class="grid">
+<!-- MAIN FEATURES -->
+<div class="grid">
 
-    <div class="card" onclick="login()">
-      🔐<br><br>Login
-    </div>
+  <div class="card" onclick="openMock()">📘<br><br>Mock Test</div>
 
-    <div class="card" onclick="signup()">
-      📝<br><br>Sign Up
-    </div>
+  <div class="card" onclick="openSchedule()">⏰<br><br>Schedule</div>
 
-    <div class="card" onclick="startTest()">
-      📘<br><br>Mock Test
-    </div>
+  <div class="card" onclick="feedback()">💬<br><br>Feedback</div>
 
-    <div class="card" onclick="timetable()">
-      ⏰<br><br>Time Table
-    </div>
+  <div class="card" onclick="youtube()">▶️<br><br>Subscribe</div>
 
-  </div>
 </div>
 
 <script>
@@ -96,12 +108,21 @@ function signup(){
   alert("Signup page coming soon 😎");
 }
 
-function startTest(){
-  window.location.href = "test.html";
+/* Folder concept (redirect) */
+function openMock(){
+  window.location.href = "mock/index.html";
 }
 
-function timetable(){
-  alert("Timetable feature coming soon 😎");
+function openSchedule(){
+  window.location.href = "schedule/index.html";
+}
+
+function feedback(){
+  alert("Feedback form coming soon 😎");
+}
+
+function youtube(){
+  window.open("https://youtube.com/@jayramcreative?si=XEirQcwwhRT3vdG_");
 }
 
 </script>
