@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>MHT-CET Test</title>
+<style>
+body { font-family:Arial; text-align:center; }
+button { margin:5px; padding:10px; }
+</style>
+</head>
+
+<body>
+
+<h1>MHT-CET Mock Test</h1>
+<h2 id="section">Physics + Chemistry</h2>
+<h3 id="timer">Time: 90:00</h3>
+
+<div id="questionBox"></div>
+
+<script>
+
+let pcQuestions = [
+{ q:"Sample PC Question", options:["A","B","C","D"], answer:"A" }
+];
+
+let mathsQuestions = [
+{ q:"Sample Maths Question", options:["A","B","C","D"], answer:"B" }
+];
+
+let section="PC";
+let current=0;
+let score=0;
+let time=5400;
+
+function showQuestion(){
+let q=(section==="PC")?pcQuestions[current]:mathsQuestions[current];
+let html="<h3>"+q.q+"</h3>";
+q.options.forEach(opt=>{
+html+=`<button onclick="checkAnswer('${opt}')">${opt}</button><br>`;
+});
+document.getElementById("questionBox").innerHTML=html;
+}
+
+function checkAnswer(ans){
+let q=(section==="PC")?pcQuestions[current]:mathsQuestions[current];
+if(ans===q.answer) score++;
+current++;
+
+let total=(section==="PC")?pcQuestions.length:mathsQuestions.length;
+
+if(current<total) showQuestion();
+else{
+if(section==="PC"){
+section="Maths";
+current=0;
+time=5400;
+document.getElementById("section").innerText="Mathematics";
+showQuestion();
+}else{
+endTest();
+}
+}
+}
+
+function startTimer(){
+let interval=setInterval(()=>{
+time--;
+let min=Math.floor(time/60);
+let sec=time%60;
+document.getElementById("timer").innerText=`Time: ${min}:${sec}`;
+
+if(time<=0){
+clearInterval(interval);
+if(section==="PC"){
+section="Maths";
+current=0;
+time=5400;
+document.getElementById("section").innerText="Mathematics";
+showQuestion();
+startTimer();
+}else{
+endTest();
+}
+}
+},1000);
+}
+
+function endTest(){
+document.body.innerHTML=`<h1>Test Completed</h1><h2>Score: ${score}</h2>`;
+}
+
+showQuestion();
+startTimer();
+
+</script>
+
+</body>
+</html>
