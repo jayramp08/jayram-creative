@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Sign Up</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+  background: black;
+  color: white;
+  text-align: center;
+  font-family: Arial;
+}
+
+.box {
+  margin-top: 100px;
+}
+
+input {
+  display: block;
+  margin: 15px auto;
+  padding: 10px;
+  width: 70%;
+  border-radius: 8px;
+  border: none;
+}
+
+button {
+  padding: 10px 20px;
+  background: red;
+  border: none;
+  color: white;
+  border-radius: 8px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+  <h2>Sign Up</h2>
+
+  <input type="text" id="user" placeholder="Enter Username">
+  <input type="password" id="pass" placeholder="Enter Password">
+
+  <button onclick="signup()">Create Account</button>
+</div>
+
+<script>
+function signup(){
+  let u = document.getElementById("user").value;
+  let p = document.getElementById("pass").value;
+
+  localStorage.setItem("username", u);
+  localStorage.setItem("password", p);
+
+  alert("Account Created ✅");
+  window.location.href = "login.html";
+}
+</script>
+
+</body>
+</html>
